@@ -32,6 +32,8 @@ const AppBar =() => {
     <View style={styles.container}>
       <ScrollView horizontal>
         <Link to="/"><Text color="primary" fontSize="subheading" fontWeight="bold" style={{paddingRight: 10}} >Repository</Text></Link>
+        <Link to="/review"><Text color="primary" fontSize="subheading" fontWeight="bold" style={{paddingRight: 10}} >Create a review</Text></Link>
+        <Link to={`/reviews`}><Text color="primary" fontSize="subheading" fontWeight="bold" style={{paddingRight: 10}} >My reviews</Text></Link>
         <Pressable onPressIn={signOut}><Text color="primary" fontSize="subheading" fontWeight="bold" style={{paddingRight: 10}}>Sign Out</Text></Pressable>
       </ScrollView>
     </View>
@@ -42,6 +44,7 @@ const AppBar =() => {
       <ScrollView horizontal>
         <Link to="/"><Text color="primary" fontSize="subheading" fontWeight="bold" style={{paddingRight: 10}} >Repository</Text></Link>
         <Link to="/signIn"><Text color="primary" fontSize="subheading" fontWeight="bold" style={{paddingRight: 10}}>Sign In</Text></Link>
+        <Link to="/signUp"><Text color="primary" fontSize="subheading" fontWeight="bold" style={{paddingRight: 10}}>Sign Up</Text></Link>
       </ScrollView>
     </View>
   ); 

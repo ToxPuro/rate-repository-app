@@ -1,7 +1,9 @@
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet, Pressable } from 'react-native';
 import Text from './Text';
 import theme from '../theme';
+import {useHistory, useParams } from 'react-router-native';
+import * as Linking from 'expo-linking';
 
 const toK= (number) => {
   if(number<1000) return number;
@@ -29,7 +31,7 @@ const cardHeaderStyles = StyleSheet.create({
 
 const Header = ({repository}) => {
   return (
-    <View style={cardHeaderStyles.container}>
+    <View style={cardHeaderStyles.container} testID={`${repository.id}/header`}>
       <View style={cardHeaderStyles.avatarContainer}>
         <Image style={cardHeaderStyles.avatar} source={{uri: repository.ownerAvatarUrl}} />
       </View>
@@ -49,6 +51,14 @@ const languageStyles = StyleSheet.create({
   }
 })
 
+const buttonStyles = StyleSheet.create({
+  container : {
+    backgroundColor: theme.colors.primary,
+    width: 110,
+    borderWidth: 3
+  }
+})
+
 const infoStyles = StyleSheet.create({
   container: {
     display: "flex",
@@ -56,11 +66,27 @@ const infoStyles = StyleSheet.create({
   },
 })
 
+const GitHubButton = ({url}) => {
 
+  const goToPage = () => {
+    Linking.openURL(url);
+  }
+
+  return(
+  <Pressable style={buttonStyles.container} onPressIn={goToPage}>
+    <Text>
+      Open In GitHub
+    </Text>
+  </Pressable>
+  )
+
+}
 
 const RepositoryItem = ({repository}) => {
+  const history = useHistory();
   return(
-    <View style= {{backgroundColor: '#ffffff'}}>
+    <Pressable onPressIn={() => history.push(`/repositories/${repository.id}`)}>
+      <View style= {{backgroundColor: '#ffffff'}} testID={repository.id} >
       <Header repository={repository}/>
       <View style={languageStyles.container}>
         <Text>{repository.language}</Text>
@@ -77,7 +103,11 @@ const RepositoryItem = ({repository}) => {
         <Text  color="textSecondary" style={{paddingRight: 5}}>Reviews</Text>
         <Text  color="textSecondary" style={{paddingRight: 5}}>Rating</Text>
       </View>
-    </View>
+      <View>
+        {repository.url ? <GitHubButton url={repository.url}></GitHubButton> : null}
+      </View>
+      </View>
+    </Pressable>
   )
 }
 
